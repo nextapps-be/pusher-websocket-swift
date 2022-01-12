@@ -481,11 +481,6 @@ import Starscream
         if let channelName = event.channelName, let chan = self.channels.find(name: channelName) {
             chan.subscribed = true
 
-            guard event.data != nil else {
-                self.delegate?.debugLog?(message: "[PUSHER DEBUG] Subscription succeeded event received without data key in payload")
-                return
-            }
-
             if PusherChannelType.isPresenceChannel(name: channelName) {
                 if let presChan = self.channels.find(name: channelName) as? PusherPresenceChannel {
                     if let dataJSON = event.dataToJSONObject() as? [String: Any], let presenceData = dataJSON["presence"] as? [String: AnyObject],
